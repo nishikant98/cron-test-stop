@@ -1,0 +1,33 @@
+name: run gcloud 
+on:
+  push:
+    branches:
+      - master
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Setup gcloud CLI
+    - uses: google-github-actions/setup-gcloud@v0.2.0
+           
+           #GoogleCloudPlatform/github-actions/setup-gcloud@v0
+      with:
+        project_id: ${{secrets.GCP_PROJECT}}
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+        export_default_credentials: true
+    
+    # Configure Docker with Credentials
+    #- name: run command 
+    # # run: |
+     #   gcloud config set project ${{ secrets.GCP_PROJECT }}
+        
+      
+    # Build the Docker image
+    - name: Build & Publish
+      run: |
+        gcloud config set project ${{ secrets.GCP_PROJECT }}
+        gcloud app versions stop --service=flex-app new12
