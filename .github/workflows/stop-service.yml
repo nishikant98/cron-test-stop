@@ -4,7 +4,7 @@ on:
     branches:
       - master
   schedule:
-      - cron: '11 9 * * *'
+      - cron: '42 9 * * *'
     
 jobs:
   setup-build-publish-deploy:
@@ -34,5 +34,5 @@ jobs:
       run: |
         gcloud config set project ${{ secrets.GCP_PROJECT }}
         gcloud app versions stop --service=flex-app new12
-        gcloud app versions stop --service=default new12
-        gcloud app versions stop --service=default new1
+       # gcloud app versions stop --service=default new12
+       # gcloud app versions stop --service=default new1
